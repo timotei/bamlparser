@@ -22,7 +22,7 @@
 using System.Collections.Generic;
 
 namespace Confuser.Renamer.BAML {
-	internal class BamlDocument : List<BamlRecord> {
+	public class BamlDocument : List<BamlRecord> {
 		public string DocumentName { get; set; }
 
 		public string Signature { get; set; }

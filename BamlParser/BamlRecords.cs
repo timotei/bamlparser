@@ -24,7 +24,7 @@ using System.Diagnostics;
 using System.IO;
 
 namespace Confuser.Renamer.BAML {
-	internal enum BamlRecordType : byte {
+	public enum BamlRecordType : byte {
 		ClrEvent = 0x13,
 		Comment = 0x17,
 		AssemblyInfo = 0x1c,
@@ -84,14 +84,14 @@ namespace Confuser.Renamer.BAML {
 		XmlnsProperty = 0x14
 	}
 
-	internal abstract class BamlRecord {
+	public abstract class BamlRecord {
 		public abstract BamlRecordType Type { get; }
 		public long Position { get; internal set; }
 		public abstract void Read(BamlBinaryReader reader);
 		public abstract void Write(BamlBinaryWriter writer);
 	}
 
-	internal abstract class SizedBamlRecord : BamlRecord {
+	public abstract class SizedBamlRecord : BamlRecord {
 		public override void Read(BamlBinaryReader reader) {
 			long pos = reader.BaseStream.Position;
 			int size = reader.ReadEncodedInt();
@@ -130,13 +130,13 @@ namespace Confuser.Renamer.BAML {
 		protected abstract void WriteData(BamlBinaryWriter writer);
 	}
 
-	internal interface IBamlDeferRecord {
+	public interface IBamlDeferRecord {
 		BamlRecord Record { get; set; }
 		void ReadDefer(BamlDocument doc, int index, Func<long, BamlRecord> resolve);
 		void WriteDefer(BamlDocument doc, int index, BinaryWriter wtr);
 	}
 
-	internal class XmlnsPropertyRecord : SizedBamlRecord {
+	public class XmlnsPropertyRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.XmlnsProperty; }
 		}
@@ -162,7 +162,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PresentationOptionsAttributeRecord : SizedBamlRecord {
+	public class PresentationOptionsAttributeRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PresentationOptionsAttribute; }
 		}
@@ -181,7 +181,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PIMappingRecord : SizedBamlRecord {
+	public class PIMappingRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PIMapping; }
 		}
@@ -203,7 +203,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class AssemblyInfoRecord : SizedBamlRecord {
+	public class AssemblyInfoRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.AssemblyInfo; }
 		}
@@ -222,7 +222,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyRecord : SizedBamlRecord {
+	public class PropertyRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.Property; }
 		}
@@ -241,7 +241,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyWithConverterRecord : PropertyRecord {
+	public class PropertyWithConverterRecord : PropertyRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyWithConverter; }
 		}
@@ -259,7 +259,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyCustomRecord : SizedBamlRecord {
+	public class PropertyCustomRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyCustom; }
 		}
@@ -282,7 +282,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class DefAttributeRecord : SizedBamlRecord {
+	public class DefAttributeRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.DefAttribute; }
 		}
@@ -301,7 +301,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class DefAttributeKeyStringRecord : SizedBamlRecord, IBamlDeferRecord {
+	public class DefAttributeKeyStringRecord : SizedBamlRecord, IBamlDeferRecord {
 		internal uint pos = 0xffffffff;
 
 		public override BamlRecordType Type {
@@ -397,7 +397,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class TypeInfoRecord : SizedBamlRecord {
+	public class TypeInfoRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.TypeInfo; }
 		}
@@ -419,7 +419,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class TypeSerializerInfoRecord : TypeInfoRecord {
+	public class TypeSerializerInfoRecord : TypeInfoRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.TypeSerializerInfo; }
 		}
@@ -437,7 +437,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class AttributeInfoRecord : SizedBamlRecord {
+	public class AttributeInfoRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.AttributeInfo; }
 		}
@@ -462,7 +462,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class StringInfoRecord : SizedBamlRecord {
+	public class StringInfoRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.StringInfo; }
 		}
@@ -481,7 +481,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class TextRecord : SizedBamlRecord {
+	public class TextRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.Text; }
 		}
@@ -497,7 +497,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class TextWithConverterRecord : TextRecord {
+	public class TextWithConverterRecord : TextRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.TextWithConverter; }
 		}
@@ -515,7 +515,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class TextWithIdRecord : TextRecord {
+	public class TextWithIdRecord : TextRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.TextWithId; }
 		}
@@ -531,7 +531,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class LiteralContentRecord : SizedBamlRecord {
+	public class LiteralContentRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.LiteralContent; }
 		}
@@ -553,7 +553,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class RoutedEventRecord : SizedBamlRecord {
+	public class RoutedEventRecord : SizedBamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.RoutedEvent; }
 		}
@@ -573,7 +573,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class DocumentStartRecord : BamlRecord {
+	public class DocumentStartRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.DocumentStart; }
 		}
@@ -595,7 +595,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class DocumentEndRecord : BamlRecord {
+	public class DocumentEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.DocumentEnd; }
 		}
@@ -604,7 +604,7 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class ElementStartRecord : BamlRecord {
+	public class ElementStartRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.ElementStart; }
 		}
@@ -623,7 +623,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class ElementEndRecord : BamlRecord {
+	public class ElementEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.ElementEnd; }
 		}
@@ -632,13 +632,13 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class KeyElementStartRecord : DefAttributeKeyTypeRecord {
+	public class KeyElementStartRecord : DefAttributeKeyTypeRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.KeyElementStart; }
 		}
 	}
 
-	internal class KeyElementEndRecord : BamlRecord {
+	public class KeyElementEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.KeyElementEnd; }
 		}
@@ -647,7 +647,7 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class ConnectionIdRecord : BamlRecord {
+	public class ConnectionIdRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.ConnectionId; }
 		}
@@ -663,7 +663,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyWithExtensionRecord : BamlRecord {
+	public class PropertyWithExtensionRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyWithExtension; }
 		}
@@ -685,7 +685,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyTypeReferenceRecord : PropertyComplexStartRecord {
+	public class PropertyTypeReferenceRecord : PropertyComplexStartRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyTypeReference; }
 		}
@@ -703,7 +703,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyStringReferenceRecord : PropertyComplexStartRecord {
+	public class PropertyStringReferenceRecord : PropertyComplexStartRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyStringReference; }
 		}
@@ -721,7 +721,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyWithStaticResourceIdRecord : StaticResourceIdRecord {
+	public class PropertyWithStaticResourceIdRecord : StaticResourceIdRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyWithStaticResourceId; }
 		}
@@ -739,7 +739,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class ContentPropertyRecord : BamlRecord {
+	public class ContentPropertyRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.ContentProperty; }
 		}
@@ -755,7 +755,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class DefAttributeKeyTypeRecord : ElementStartRecord, IBamlDeferRecord {
+	public class DefAttributeKeyTypeRecord : ElementStartRecord, IBamlDeferRecord {
 		internal uint pos = 0xffffffff;
 
 		public override BamlRecordType Type {
@@ -849,13 +849,13 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyListStartRecord : PropertyComplexStartRecord {
+	public class PropertyListStartRecord : PropertyComplexStartRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyListStart; }
 		}
 	}
 
-	internal class PropertyListEndRecord : BamlRecord {
+	public class PropertyListEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyListEnd; }
 		}
@@ -864,13 +864,13 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class PropertyDictionaryStartRecord : PropertyComplexStartRecord {
+	public class PropertyDictionaryStartRecord : PropertyComplexStartRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyDictionaryStart; }
 		}
 	}
 
-	internal class PropertyDictionaryEndRecord : BamlRecord {
+	public class PropertyDictionaryEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyDictionaryEnd; }
 		}
@@ -879,13 +879,13 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class PropertyArrayStartRecord : PropertyComplexStartRecord {
+	public class PropertyArrayStartRecord : PropertyComplexStartRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyArrayStart; }
 		}
 	}
 
-	internal class PropertyArrayEndRecord : BamlRecord {
+	public class PropertyArrayEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyArrayEnd; }
 		}
@@ -894,7 +894,7 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class PropertyComplexStartRecord : BamlRecord {
+	public class PropertyComplexStartRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyComplexStart; }
 		}
@@ -910,7 +910,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class PropertyComplexEndRecord : BamlRecord {
+	public class PropertyComplexEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.PropertyComplexEnd; }
 		}
@@ -919,7 +919,7 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class ConstructorParametersStartRecord : BamlRecord {
+	public class ConstructorParametersStartRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.ConstructorParametersStart; }
 		}
@@ -928,7 +928,7 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class ConstructorParametersEndRecord : BamlRecord {
+	public class ConstructorParametersEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.ConstructorParametersEnd; }
 		}
@@ -937,7 +937,7 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class ConstructorParameterTypeRecord : BamlRecord {
+	public class ConstructorParameterTypeRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.ConstructorParameterType; }
 		}
@@ -953,7 +953,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class DeferableContentStartRecord : BamlRecord, IBamlDeferRecord {
+	public class DeferableContentStartRecord : BamlRecord, IBamlDeferRecord {
 		long pos;
 		internal uint size = 0xffffffff;
 
@@ -983,13 +983,13 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class StaticResourceStartRecord : ElementStartRecord {
+	public class StaticResourceStartRecord : ElementStartRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.StaticResourceStart; }
 		}
 	}
 
-	internal class StaticResourceEndRecord : BamlRecord {
+	public class StaticResourceEndRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.StaticResourceEnd; }
 		}
@@ -998,7 +998,7 @@ namespace Confuser.Renamer.BAML {
 		public override void Write(BamlBinaryWriter writer) { }
 	}
 
-	internal class StaticResourceIdRecord : BamlRecord {
+	public class StaticResourceIdRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.StaticResourceId; }
 		}
@@ -1014,7 +1014,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class OptimizedStaticResourceRecord : BamlRecord {
+	public class OptimizedStaticResourceRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.OptimizedStaticResource; }
 		}
@@ -1033,7 +1033,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class LineNumberAndPositionRecord : BamlRecord {
+	public class LineNumberAndPositionRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.LineNumberAndPosition; }
 		}
@@ -1052,7 +1052,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class LinePositionRecord : BamlRecord {
+	public class LinePositionRecord : BamlRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.LinePosition; }
 		}
@@ -1068,7 +1068,7 @@ namespace Confuser.Renamer.BAML {
 		}
 	}
 
-	internal class NamedElementStartRecord : ElementStartRecord {
+	public class NamedElementStartRecord : ElementStartRecord {
 		public override BamlRecordType Type {
 			get { return BamlRecordType.NamedElementStart; }
 		}
