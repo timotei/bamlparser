@@ -30,4 +30,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: BAMLParser
-        path: BAMLParser\bin\Release\*.nupkg
+        path: ./BamlParser/bin/Release/*.nupkg
