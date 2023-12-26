@@ -17,7 +17,7 @@
     <Description>BAML Reader and Writer from the ConfuserEx project.</Description>
     <Authors>Timotei Dolean</Authors>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Copyright>Copyright © Timotei Dolean 2015</Copyright>
+    <Copyright>2014 yck1509, 2015 Timotei Dolean</Copyright>
     <Description>This package contains a BAML Reader and Writer that allows one to manipulate the BAML stream.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/timotei/bamlparser</PackageProjectUrl>
